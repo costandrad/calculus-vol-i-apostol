@@ -38,12 +38,81 @@ use_python("~/anaconda3/envs/science/bin/python")
 \begin{enumerate}
   \item 
   \begin{enumerate}[label=(\alph*)]
-    \item Modificar a região na figura I.3 tomando como ordenada para cada $x$ o valor $2x^2$ em vex de $x^2$. Desenhar a nova figura. Seguindo neste caso os passos principais de desenvolvimento anterior e comparando ambos, estudando a repercussão da mudança no cálculo de $A$. Efetue o mesmo se a ordenada em cada $x$ é:
-    \item $3x^2$,
-    \item $\dfrac{1}{4}x^2$,
-    \item $2x^2 + 1$,
-    \item $ax^2 + c$,
+    \item Modificar a região na figura I.3 tomando como ordenada para cada $x$ o valor $2x^2$ em vez de $x^2$. Desenhar a nova figura. Seguindo neste caso os passos principais de desenvolvimento anterior e comparando ambos, estudando a repercussão da mudança no cálculo de $A$. 
   \end{enumerate}
+  \iniSol
+  \begin{enumerate}[label=(\alph*)]
+    \item 
+    \begin{figure}[H]
+    \centering
+    \caption{Cálculo da área do segmento parabólico mediante aproximação por falta e por excesso} \label{fig:seg-parabolico-a}
+    \vspace{0.5cm}
+    \begin{tikzpicture}[x=1.5cm, y=0.75cm]
+    \begin{scope}
+      \draw[mainColor, thick, domain=0:2, samples=50] plot (\x, {2*(\x)^2});
+      \draw[thick] (-0.5, 0) -- (0, 0) node[below] {$0$} -- (2.5, 0);
+      \draw[dashed] (0,0) -- (0, 8) -- (2, 8);
+      \draw (1, 2) -- (1, 0) node[below] {$x$} node[midway, right] {$2x^2$};
+      \draw (2, 8) -- (2, 0) node[below] {$b$} node[midway, right] {$2b^2$};
+      \node at (1, -1.5) {(a) $y = 2x^2$};
+    \end{scope}
+    \begin{scope}[xshift=5cm]
+      \draw[mainColor, thick, domain=0:2, samples=50] plot (\x, {2*(\x)^2});
+      \draw[thick] (-0.5, 0) -- (0,0) node[below] {$0$} -- (2.5, 0);
+      \draw[dashed] (0,0) -- (0, 8) -- (2, 8);
+      \draw (2, 8) -- (2, 0);
+      \foreach \x in {0, 0.4, 1.2} {
+        \draw[fill=mainColor!20] (\x, 0) rectangle ({\x+0.4}, {2*\x^2});
+      }
+      \node[below] at (0.4, 0) {$\frac{b}{n}$};
+      \node[below] at (0.8, 0) {$\frac{2b}{n}$};
+      \node[below] at (1.2, 0) {$\frac{kb}{n}$};
+      \node[below right] at (2.0, 0) {$b = \frac{nb}{n}$};
+      \draw[<->] (1.2, 3.) -- ++(0.4, 0) node[midway, above] {$\frac{b}{n}$};
+      \draw[<->] (1.7, 0) -- ++(0, 2.88) node[midway, right, fill=white, xshift=0.1cm] {$2\left(\frac{kb}{n}\right)^2$};
+      \draw[-latex] (0.8, 3.6) node[above] {\small $A_k = 2 \dfrac{b^3}{n^3} k^2$} -- (1.2, 2.88); 
+      \node at (1, -1.5) {(b) Por falta};
+    \end{scope}
+    \begin{scope}[xshift=10cm]
+      \draw[thick] (-0.5, 0) -- (0,0) node[below] {$0$} -- (2.5, 0);
+      \draw[dashed] (0,0) -- (0, 8) -- (2, 8);
+      \draw (2, 8) -- (2, 0);
+      \foreach \x in {0, 0.4, 1.2} {
+        \draw[fill=mainColor!20] (\x, 0) rectangle ({\x+0.4}, {2*(\x+0.4)^2});
+      }
+      \node[below] at (0.4, 0) {$\frac{b}{n}$};
+      \node[below] at (0.8, 0) {$\frac{2b}{n}$};
+      \node[below] at (1.6, 0) {$\frac{kb}{n}$};
+      \node[below right] at (2.0, 0) {$b = \frac{nb}{n}$};
+      \draw[<->] (1.2, 5.3) -- ++(0.4, 0) node[midway, above] {$\frac{b}{n}$};
+      \draw[<->] (1.7, 0) -- ++(0, 5.12) node[midway, right, fill=white, xshift=0.1cm] {$2\left(\frac{kb}{n}\right)^2$};
+      \draw[-latex] (0.8, 6) node[above] {\small $A_k = 2 \dfrac{b^3}{n^3} k^2$} -- (1.2, 5.12); 
+      \draw[mainColor, thick, domain=0:2, samples=50] plot (\x, {2*(\x)^2});
+      \node at (1, -1.5) {(c) Por excesso};
+    \end{scope}
+    \end{tikzpicture}
+    \end{figure}
+    Consideremos um segmento parabólico da função $y = 2x^2$ no intervalo $[0, b]$. Dividimos esse intervalo em $n$ segmentos de comprimento $\dfrac{b}{n}$. Sobre tais segmentos, construímos retângulos inferiores à parábola. Assim, o $k-$ésimo segmento terá altura igual a $2\left(\dfrac{kb}{n}\right)^2$ e área :
+    $$A_k = 2 \dfrac{b^3}{n^3}k^2$$
+    em que $k = 1, 2, \cdots, n-1$. Dessa forma, somando todos os retãngulos inferiores, obtemos a aproximação por falta $s_n$ para a área do segmento parabólico:
+    \begin{align*}
+    s_n &= 2\dfrac{b^3}{n^3} \left[1^2 + 2^2 + 3^3 + \cdots + (n-1)^2\right]\\
+    &= 2 \dfrac{b^3}{n^3} \left(\dfrac{n^3}{3} - \dfrac{n^2}{2} + \dfrac{n}{6}\right)\\
+    &= \dfrac{2b^3}{3} - \dfrac{b^3}{n} + \dfrac{b^3}{3n^2}
+    \end{align*}
+    Analogamente, ao aproximar a área do segmento parabólico por retângulos exteriores, obtemos o seguinte somatório:
+    \begin{align*}
+    S_n &= 2\dfrac{b^3}{n^3} \left[1^2 + 2^2 + 3^3 + \cdots + (n-1)^2\right]\\
+    &= 2 \dfrac{b^3}{n^3} \left(\dfrac{n^3}{3} - \dfrac{n^2}{2} + \dfrac{n}{6}\right)\\
+    &= \dfrac{2b^3}{3} + \dfrac{b^3}{n} + \dfrac{b^3}{3n^2}
+    \end{align*}
+    Note-se que a desigualdade
+    $$
+    s_n < \dfrac{2b^3}{3} < S_n
+    $$
+    deve ser válida para cada valor de $n$, donde concluímos que a área do segmento parabólico $[0, b]$ da função $y = 2x^2$ deve ser $A = \dfrac{2b^3}{3}$.
+  \end{enumerate}
+  \fimSol
 \end{enumerate}
 
 
@@ -146,7 +215,7 @@ s_lim = [-s_0A, np.max([np.max(s_A), np.max(s_B)]) + s_0A]
     \draw[red, thick] (`r py$t[1]`, `r py$s_A[1]`) -- (`r py$t[3]`, `r py$s_A[3]`) node[right, yshift=5pt, black] {$\textbf{A}$};
     \draw[thick] (4pt, `r py$s_0A`) -- (-4pt, `r py$s_0A`) node[left] {$`r py$s_0A`$};
     % Função Horária de B
-    \draw[blue, thick] (`r py$t[1]`, `r py$s_B[1]`) -- (`r py$t[3]`, `r py$s_B[3]`) node[right, yshift=-2pt , black] {$\textbf{B}$};
+    \draw[mainColor, thick] (`r py$t[1]`, `r py$s_B[1]`) -- (`r py$t[3]`, `r py$s_B[3]`) node[right, yshift=-2pt , black] {$\textbf{B}$};
     \draw[thick] (4pt, `r py$s_0B`) -- (-4pt, `r py$s_0B`) node[left] {$`r py$s_0B`$};
     % Ponto de encontro
     \draw[dashed] (`r py$t_star`, 0) -- (`r py$t_star`, `r py$s_star`) -- (0, `r py$s_star`);
